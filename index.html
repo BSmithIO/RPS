@@ -1,0 +1,70 @@
+<script>
+    function computerPlay() {
+        const rpsPlays = ["rock", "paper", "scissors"];
+        return rpsPlays[Math.floor(Math.random() * rpsPlays.length)];
+    }
+    function playerPlay() {
+        let playerChoice = prompt("Please choose rock, paper, or scissors.");
+
+        while (typeof(playerChoice) != "string" || playerChoice == "") {
+            playerChoice = prompt("Please only choose between rock, paper, or scissors");
+        }
+
+        playerChoice = playerChoice.toLowerCase();
+        
+        if (playerChoice == "rock" || playerChoice == "paper" || playerChoice == "scissors") {
+            return playerChoice;
+        } else {
+            while (!(playerChoice == "rock" || playerChoice == "paper" || playerChoice == "scissors")) {
+                playerChoice = prompt("Please only choose between rock, paper, or scissors");
+            }
+            return playerChoice;
+        }
+    }
+    function playRound(playerSelection, computerSelection) {
+        computerSelection = computerPlay();
+        playerSelection = playerPlay();
+        if (playerSelection == computerSelection) {
+            return "Draw!";
+        } else if (playerSelection == "scissors" && computerSelection == "paper") {
+            return 'You win! Scissors beat paper.';
+        } else if (playerSelection == "paper" && computerSelection == "rock") {
+            return 'You win! Paper beats rock.';
+        } else if (playerSelection == "rock" && computerSelection == "scissors") {
+            return 'You win! Rock beats scissors';
+        } else {
+            computerSelection = computerSelection.charAt(0).toUpperCase() + computerSelection.slice(1);
+            return `You lose. ${computerSelection} beats ${playerSelection}`;
+        }
+    }
+    function game() {
+        let playerScore = 0;
+        let computerScore = 0;
+        function evalScores(roundResult) {
+        let playerWin = "You win";
+        let computerWin = "You lose";
+        let rpsDraw = "Draw";
+        let scoreHelper = roundResult;
+        if (scoreHelper.includes(playerWin)) {
+            playerScore += 1;
+        } else if (scoreHelper.includes(rpsDraw)){
+            return
+        } else {
+            computerScore += 1;
+        }
+    }
+        let roundResult;
+        for (i = 0; i < 5; i++) {
+            roundResult = playRound();
+            console.log(roundResult);
+            evalScores(roundResult);           
+        }
+        if (playerScore > computerScore) {
+            console.log("Player wins best out of 5!");
+        } else if (playerScore == computerScore) {
+            console.log("Draw!");
+        } else {
+            console.log("Computer wins best out of 5!");
+        }
+    }
+</script>
